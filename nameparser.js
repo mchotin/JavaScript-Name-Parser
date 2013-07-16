@@ -5,6 +5,8 @@
 
 //forked from https://github.com/joshfraser/JavaScript-Name-Parser
 
+//current source now at https://github.com/mchotin/JavaScript-Name-Parser
+
 function NameParser() { }
 
 // split full names into the following parts:
@@ -31,6 +33,9 @@ NameParser.prototype.parse = function (fullname) {
 		}
 	}
 	var numWords = nameParts.length;
+    //if somehow we ended up finding no real parts go ahead and 
+    //just use the whole string and hopefully it will parse into something
+    if (numWords == 0) nameParts = unfilteredNameParts;
 	// is the first word a title? (Mr. Mrs, etc)
 	var salutation = this.is_salutation(nameParts[0]);
 	var suffix = this.is_suffix(nameParts[nameParts.length - 1]);
@@ -41,7 +46,7 @@ NameParser.prototype.parse = function (fullname) {
 	
 	// concat the first name
 	for (i=start; i<(end - 1); i++) {
-		word = nameParts[i];
+		var word = nameParts[i];
 		// move on to parsing the last name if we find an indicator of a 
         // compound last name (Von, Van, etc)
 		// we use i != start to allow for rare cases where an indicator is 
